@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<!--
+    To a totally custom behaviour for a AppBar, replace the
+    default AppBar to this content below. To allow this, perform the follow steps:
 
-    <com.google.android.material.appbar.AppBarLayout
+    1. Add the theme "@style/Theme.EmojiApp.NoActionBar" to the MainActivity tag
+       in AndroidManifest.xml
+
+    2. In activity_main.xml, replace the layout of <include> tag, to this file (app_bar_main.xml)
+
+    3. In MainActivity.kt, do the steps below:
+
+        3.1 Get this toolbar element and set in this Activity
+
+         // Access from nested <include> layout
+         val toolbar: Toolbar = binding.appBarMain.toolbar
+         setSupportActionBar(toolbar)
+
+        3.2 Optionally, instantiate an AppBarConfiguration
+        and pass to NavigationUI.setupActionBarWithNavController or to AppCompatActivity.setupActionBarWithNavController()
+
+ -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.EmojiApp.AppBarOverlay">
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.EmojiApp.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.EmojiApp.AppBarOverlay">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.EmojiApp.PopupOverlay" />
 
-    <include layout="@layout/content_main" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        <include layout="@layout/content_main" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
+

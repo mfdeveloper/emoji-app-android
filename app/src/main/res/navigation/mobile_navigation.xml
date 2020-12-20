@@ -3,23 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/home_fragment">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.blisschallenge.emojiapp.ui.home.HomeFragment"
+        android:id="@+id/home_fragment"
+        android:name="com.blisschallenge.emojiapp.view.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_fragment_to_emojis_list_fragment"
+            app:destination="@id/emojis_list_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_repos_list_fragment"
+            app:destination="@id/repos_list_fragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.blisschallenge.emojiapp.ui.gallery.GalleryFragment"
+        android:id="@+id/emojis_list_fragment"
+        android:name="com.blisschallenge.emojiapp.view.emojis.EmojisListFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_emojis_list" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.blisschallenge.emojiapp.ui.slideshow.SlideshowFragment"
+        android:id="@+id/repos_list_fragment"
+        android:name="com.blisschallenge.emojiapp.view.gitrepos.GitReposListFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_git_repos_list" />
 </navigation>
