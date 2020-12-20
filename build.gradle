@@ -10,6 +10,8 @@ buildscript {
         material_version = '1.2.1'
         navigation_version = '2.3.2'
         legacy_version = '1.0.0'
+        retrofit_version = '2.9.0'
+        coroutines_version = '1.3.9'
         databinding_compiler_version = gradle_version
     }
     repositories {
