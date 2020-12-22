@@ -1,4 +1,4 @@
-package com.blisschallenge.emojiapp.view.emojis
+package com.blisschallenge.emojiapp.views.emojis
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

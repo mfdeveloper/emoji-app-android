@@ -1,4 +1,4 @@
-package com.blisschallenge.emojiapp.view
+package com.blisschallenge.emojiapp.views
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,12 +9,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
