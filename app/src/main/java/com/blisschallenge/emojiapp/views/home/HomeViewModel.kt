@@ -9,64 +9,42 @@ import androidx.navigation.NavController
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.helpers.DataState
 import com.blisschallenge.emojiapp.models.entities.Emoji
-import com.blisschallenge.emojiapp.models.services.GitHubService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.blisschallenge.emojiapp.models.repositories.GithubRepository
 import kotlin.random.Random
 
 class HomeViewModel @ViewModelInject constructor(
-    private val service: GitHubService
+    private val repository: GithubRepository
 ): ViewModel() {
 
     lateinit var navController: NavController
 
-    val text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-
     val items: LiveData<List<Emoji>>
-        get() = _items
+        get() = repository.items
 
     val emoji: LiveData<Emoji>
         get() = _emoji
 
     val dataState: LiveData<DataState>
-        get() = _dataState
+        get() = repository.dataState
 
     private val _emoji = MutableLiveData<Emoji>()
-    private val _items = MutableLiveData<List<Emoji>>()
-    private val _dataState = MutableLiveData(DataState.NONE)
 
-    fun fetchEmojis() {
+    fun allEmojis() {
 
-        val dataIsEmpty = _items.value?.isEmpty() ?: true
+        if (repository.isDataEmpty) {
 
-        if(dataIsEmpty) {
-
-            _dataState.value = DataState.START
-
-            viewModelScope.launch(Dispatchers.IO) {
-                val response = service.listEmojis()
-
-                if (response.isSuccessful) {
-
-                    withContext(Dispatchers.Main) {
-                        _items.value = response.body()
-                        _emoji.value = randomEmoji()
-
-                        _dataState.value = DataState.LOADED
-                    }
-                }
+            repository.emojis(viewModelScope) {
+                _emoji.value = randomEmoji()
             }
         } else {
             _emoji.value = randomEmoji()
         }
+
     }
 
     fun randomEmoji(): Emoji? {
-        val index = Random.nextInt(0, _items.value!!.size - 1)
-        return _items.value?.get(index)
+        val index = Random.nextInt(0, items.value!!.size - 1)
+        return items.value?.get(index)
     }
 
     fun showList() {
@@ -78,6 +56,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun drawEmoji() {
 
-         fetchEmojis()
+        allEmojis()
+
     }
 }
