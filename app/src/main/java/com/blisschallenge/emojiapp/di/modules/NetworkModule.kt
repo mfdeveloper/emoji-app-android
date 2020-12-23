@@ -1,20 +1,19 @@
 package com.blisschallenge.emojiapp.di.modules
 
-import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.blisschallenge.emojiapp.models.services.GitHubService
-import com.blisschallenge.emojiapp.models.services.converter.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     private val baseUrl get() = "https://api.github.com"
@@ -24,7 +23,8 @@ object NetworkModule {
     fun provideGson(): Gson {
 
         return GsonBuilder()
-            .registerTypeAdapter(Emoji::class.java, EmojiConverterFactory())
+            .registerTypeAdapter(List::class.java, EmojiConverterFactory())
+            .enableComplexMapKeySerialization()
             .setPrettyPrinting()
             .create()
     }

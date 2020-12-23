@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
+        <variable
+            name="home"
+            type="com.blisschallenge.emojiapp.views.home.HomeFragment" />
+
         <variable
             name="viewModel"
             type="com.blisschallenge.emojiapp.views.home.HomeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".views.home.HomeFragment">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:visibility="@{home.showProgress}"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            />
 
         <ImageView
-            android:id="@+id/emoji_icon"
+            android:id="@+id/image_emoji"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:src="@drawable/ic_menu_gallery"
+            android:visibility="@{home.showImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.2"
+            android:contentDescription="@string/content_image_emoji" />
 
         <Button
             android:id="@+id/btn_draw_emoji"
@@ -37,10 +56,11 @@
             android:text="@string/button_emoji"
             android:textSize="@dimen/button_text_size"
             android:textStyle="bold"
+            android:onClick="@{() -> viewModel.drawEmoji()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emoji_icon"
+            app:layout_constraintTop_toBottomOf="@+id/image_emoji"
             app:layout_constraintVertical_bias="0.1" />
 
         <Button
@@ -59,7 +79,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emoji_icon"
+            app:layout_constraintTop_toBottomOf="@+id/image_emoji"
             app:layout_constraintVertical_bias="0.25" />
 
         <!-- Original template "TextView" just for DataBind tests -->

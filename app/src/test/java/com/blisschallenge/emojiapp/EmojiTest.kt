@@ -1,7 +1,7 @@
 package com.blisschallenge.emojiapp
 
 import com.blisschallenge.emojiapp.models.entities.Emoji
-import com.blisschallenge.emojiapp.models.services.converter.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
