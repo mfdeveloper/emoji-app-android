@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.blisschallenge.emojiapp.view.gitrepos.GitReposViewModel" />
+            type="com.blisschallenge.emojiapp.views.gitrepos.GitReposViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.gitrepos.GitReposListFragment">
+        tools:context=".views.gitrepos.GitReposListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/repos_list"

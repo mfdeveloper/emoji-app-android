@@ -1,4 +1,4 @@
-package com.blisschallenge.emojiapp.view.gitrepos
+package com.blisschallenge.emojiapp.views.gitrepos
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
