@@ -31,7 +31,7 @@ class EmojisListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.recyclerEmojiList.adapter = imageAdapter
 
-        viewModel.itemsUrls.observe(viewLifecycleOwner) { urls: List<String> ->
+        viewModel.itemsUrls.observe(viewLifecycleOwner) { urls: MutableList<String> ->
             imageAdapter.submitList(urls)
         }
 

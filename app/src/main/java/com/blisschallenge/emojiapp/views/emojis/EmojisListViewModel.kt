@@ -12,8 +12,8 @@ class EmojisListViewModel @ViewModelInject constructor(
     val items: LiveData<List<Emoji>>
         get() = repository.items
 
-    val itemsUrls: LiveData<List<String>> = Transformations.map(items) {
-        it.map { emoji -> emoji.url }
+    val itemsUrls: LiveData<MutableList<String>> = Transformations.map(items) {
+        it.map { emoji -> emoji.url }.toMutableList()
     }
 
     init {

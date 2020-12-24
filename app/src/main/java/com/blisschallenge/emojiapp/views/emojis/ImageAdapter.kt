@@ -1,6 +1,7 @@
 package com.blisschallenge.emojiapp.views.emojis
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -12,8 +13,28 @@ import com.blisschallenge.emojiapp.databinding.ItemImageBinding
 class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
 
     lateinit var url: String
+    private lateinit var viewHolder: ViewHolder
 
-    class ViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.imageData.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            remove()
+        }
+
+        fun remove() {
+
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                val listChange = currentList.toMutableList()
+
+                listChange.removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+            }
+        }
+    }
 
     companion object : DiffUtil.ItemCallback<String>() {
         override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
@@ -25,8 +46,9 @@ class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
         val binding = DataBindingUtil.inflate<ItemImageBinding>(inflater, R.layout.item_image, parent, false)
 
         binding.adapter = this
+        viewHolder = ViewHolder(binding)
 
-        return ViewHolder(binding)
+        return viewHolder
     }
 
     // Replace the contents of a view (invoked by the layout manager)
