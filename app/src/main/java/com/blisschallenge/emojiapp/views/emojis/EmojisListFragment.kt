@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentEmojisListBinding
+import com.blisschallenge.emojiapp.models.entities.ImageData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +32,7 @@ class EmojisListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.recyclerEmojiList.adapter = imageAdapter
 
-        viewModel.itemsUrls.observe(viewLifecycleOwner) { urls: MutableList<String> ->
+        viewModel.itemsUrls.observe(viewLifecycleOwner) { urls ->
             imageAdapter.submitList(urls)
         }
 

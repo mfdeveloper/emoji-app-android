@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentHomeBinding
-import com.blisschallenge.emojiapp.helpers.DataState
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -27,14 +25,11 @@ class HomeFragment : Fragment() {
   private val viewModel: HomeViewModel by viewModels()
   private lateinit var binding: FragmentHomeBinding
 
-  var showProgress = MutableLiveData(View.GONE)
-  var showImage = MutableLiveData(View.VISIBLE)
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         viewModel.navController = findNavController()
 
@@ -47,16 +42,4 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupObservers()
-    }
-
-    private fun setupObservers() {
-        viewModel.dataState.observe(viewLifecycleOwner) {
-            showProgress.value = if (it == DataState.START) View.VISIBLE else View.GONE
-            showImage.value = if (it == DataState.START) View.INVISIBLE else View.VISIBLE
-        }
-    }
 }

@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.ItemImageBinding
+import com.blisschallenge.emojiapp.models.entities.ImageData
 
-class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
+class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) {
 
-    lateinit var url: String
+    lateinit var imageData: ImageData
     private lateinit var viewHolder: ViewHolder
 
     inner class ViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
@@ -25,7 +26,7 @@ class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
             remove()
         }
 
-        fun remove() {
+        private fun remove() {
 
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 val listChange = currentList.toMutableList()
@@ -36,9 +37,9 @@ class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
         }
     }
 
-    companion object : DiffUtil.ItemCallback<String>() {
-        override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
-        override fun areItemsTheSame(oldItem: String, newItem: String) = areContentsTheSame(oldItem, newItem)
+    companion object : DiffUtil.ItemCallback<ImageData>() {
+        override fun areContentsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.url == newItem.url
+        override fun areItemsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.id == newItem.id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,7 +55,7 @@ class ImageAdapter : ListAdapter<String, ImageAdapter.ViewHolder>(Companion) {
     // Replace the contents of a view (invoked by the layout manager)
     // Call/Assign data bindings and soon
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        url = getItem(position)
+        imageData = getItem(position)
 
         holder.binding.executePendingBindings()
     }
