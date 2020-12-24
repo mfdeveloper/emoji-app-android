@@ -35,14 +35,17 @@
 
         <ImageView
             android:id="@+id/image_emoji"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:contentDescription="@string/content_image_emoji"
             android:src="@drawable/ic_menu_gallery"
             android:visibility="@{home.showImage}"
+            app:imageUrl="@{viewModel.emoji.url}"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+            app:layout_constraintStart_toStartOf="@+id/progress_bar"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2"
-            android:contentDescription="@string/content_image_emoji" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <Button
             android:id="@+id/btn_draw_emoji"

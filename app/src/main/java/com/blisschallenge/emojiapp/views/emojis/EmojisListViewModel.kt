@@ -1,11 +1,27 @@
 package com.blisschallenge.emojiapp.views.emojis
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.blisschallenge.emojiapp.models.entities.Emoji
+import com.blisschallenge.emojiapp.models.repositories.GithubRepository
 
-class EmojisListViewModel : ViewModel() {
+class EmojisListViewModel @ViewModelInject constructor(
+    private val repository: GithubRepository
+) : ViewModel() {
 
-    val text = MutableLiveData<String>().apply {
-        value = "This is a list Fragment"
+    val items: LiveData<List<Emoji>>
+        get() = repository.items
+
+    val itemsUrls: LiveData<List<String>> = Transformations.map(items) {
+        it.map { emoji -> emoji.url }
+    }
+
+    init {
+        fetchData()
+    }
+
+    fun fetchData() {
+
+        repository.emojis(viewModelScope)
     }
 }

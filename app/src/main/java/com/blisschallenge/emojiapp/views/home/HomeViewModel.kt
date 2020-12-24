@@ -19,7 +19,7 @@ class HomeViewModel @ViewModelInject constructor(
     lateinit var navController: NavController
 
     val items: LiveData<List<Emoji>>
-        get() = repository.items
+        get() = this.repository.items
 
     val emoji: LiveData<Emoji>
         get() = _emoji
@@ -29,7 +29,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     private val _emoji = MutableLiveData<Emoji>()
 
-    fun allEmojis() {
+    fun fetchEmoji() {
 
         if (repository.isDataEmpty) {
 
@@ -56,7 +56,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun drawEmoji() {
 
-        allEmojis()
+        fetchEmoji()
 
     }
 }

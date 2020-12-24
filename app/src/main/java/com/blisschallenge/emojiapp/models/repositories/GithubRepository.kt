@@ -27,7 +27,7 @@ class GithubRepository @Inject constructor(
     private val _items = MutableLiveData<List<Emoji>>()
 
     fun emojis(modelScope: CoroutineScope,
-               onFinish: (MutableLiveData<List<Emoji>>) -> Unit) {
+               onFinish: (MutableLiveData<List<Emoji>>) -> Unit = {}) {
 
         if (isDataEmpty) {
 

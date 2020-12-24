@@ -12,8 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentHomeBinding
 import com.blisschallenge.emojiapp.helpers.DataState
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -59,17 +57,6 @@ class HomeFragment : Fragment() {
         viewModel.dataState.observe(viewLifecycleOwner) {
             showProgress.value = if (it == DataState.START) View.VISIBLE else View.GONE
             showImage.value = if (it == DataState.START) View.INVISIBLE else View.VISIBLE
-        }
-
-        viewModel.emoji.observe(viewLifecycleOwner) {
-
-            // TODO: See why Glide.placeholder() method doesn't work
-            Glide.with(binding.root)
-                .load(it.url)
-                .centerCrop()
-                .transform(CircleCrop())
-                .error(R.drawable.ic_baseline_error_24)
-                .into(binding.imageEmoji)
         }
     }
 }
