@@ -24,8 +24,8 @@ class EmojisListViewModel @ViewModelInject constructor(
         fetchData()
     }
 
-    fun fetchData() {
+    fun fetchData(onFinish: (MutableLiveData<List<Emoji>>) -> Unit = {}) {
 
-        repository.emojis(viewModelScope)
+        repository.emojis(viewModelScope, onFinish)
     }
 }

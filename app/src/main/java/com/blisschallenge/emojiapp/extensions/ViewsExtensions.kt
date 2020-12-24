@@ -3,7 +3,6 @@ package com.blisschallenge.emojiapp.extensions
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

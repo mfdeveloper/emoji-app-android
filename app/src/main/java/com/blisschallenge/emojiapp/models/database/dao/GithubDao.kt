@@ -1,6 +1,5 @@
 package com.blisschallenge.emojiapp.models.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,7 +9,7 @@ import com.blisschallenge.emojiapp.models.entities.Emoji
 @Dao
 interface GithubDao {
 
-    @Query("SELECT * FROM emojis")
+    @Query("SELECT * FROM emojis ORDER BY id ASC")
     suspend fun listEmojis(): List<Emoji>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

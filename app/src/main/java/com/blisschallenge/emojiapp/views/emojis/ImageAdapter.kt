@@ -59,4 +59,10 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
 
         holder.binding.executePendingBindings()
     }
+
+    // Clean all elements of the recycler
+    fun clear() {
+        currentList.toMutableList().clear()
+        notifyDataSetChanged()
+    }
 }
