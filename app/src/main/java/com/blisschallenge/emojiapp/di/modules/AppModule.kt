@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private val baseUrl get() = "https://api.github.com"
+    private val baseUrl = "https://api.github.com"
 
     @Provides
     @Singleton
@@ -53,6 +53,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
+
+        if (AppDatabase.CLEAR_FIRST) {
+
+            appContext.deleteDatabase(AppDatabase.DATABASE_NAME)
+        }
 
         return Room.databaseBuilder(
             appContext,

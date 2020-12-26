@@ -12,5 +12,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "github-services"
+        const val CLEAR_FIRST = false
     }
 }
