@@ -31,18 +31,26 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 val listChange = currentList.toMutableList()
 
-                listChange.removeAt(adapterPosition)
-                notifyItemRemoved(adapterPosition)
+                if (currentList.size == 1) {
+                    notifyItemRemoved(adapterPosition)
+                    submitList(listOf())
+                }else {
+                    listChange.removeAt(adapterPosition)
+
+                    submitList(listChange)
+                }
             }
         }
     }
 
     companion object : DiffUtil.ItemCallback<ImageData>() {
+
         override fun areContentsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.url == newItem.url
         override fun areItemsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.id == newItem.id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemImageBinding>(inflater, R.layout.item_image, parent, false)
 
@@ -53,8 +61,9 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    // Call/Assign data bindings and soon
+    // Call/Assign values to data bindings and soon
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         imageData = getItem(position)
 
         holder.binding.executePendingBindings()
@@ -62,7 +71,8 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
 
     // Clean all elements of the recycler
     fun clear() {
-        currentList.toMutableList().clear()
+
+        submitList(listOf())
         notifyDataSetChanged()
     }
 }

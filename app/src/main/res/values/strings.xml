@@ -15,4 +15,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_list_emojis">Emojis</string>
     <string name="menu_repos">Repositories</string>
+    <string name="menu_avatars">Avatars</string>
 </resources>

@@ -2,69 +2,79 @@ package com.blisschallenge.emojiapp.models.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.blisschallenge.emojiapp.helpers.DataState
+import com.blisschallenge.emojiapp.helpers.RequestInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-abstract class BaseRepository<T> {
+abstract class BaseRepository {
 
-    val isDataEmpty: Boolean
-        get() = when(items.value) {
-            is List<*> -> (items.value as List<*>).isEmpty()
-            else -> items.value == null
-        }
-
-    val items: LiveData<T>
-        get() = _items
-    val dataState: LiveData<DataState>
+    val dataState: LiveData<RequestInfo<Any>>
         get() = _dataState
 
-    protected val _dataState = MutableLiveData(DataState.NONE)
-    protected val _items = MutableLiveData<T>()
+    protected val _dataState = MutableLiveData(RequestInfo<Any>())
 
-    fun cacheOrRemoteRequest(modelScope: CoroutineScope,
-                             remoteRequest: suspend () -> Response<T>,
-                             dbRequest: suspend () -> T,
-                             dbCacheSave: suspend (T) -> Unit,
-                             onFinish: (MutableLiveData<T>) -> Unit = {}) {
+    fun <T> cacheOrRemoteRequest(
+        modelScope: CoroutineScope,
+        remoteRequest: (suspend () -> Response<T>)? = null,
+        shouldRemoteRequest: suspend () -> Boolean = { true },
+        dbRequest: suspend () -> T,
+        dbCacheSave: suspend (T) -> Unit = {},
+        onFinish: (MutableLiveData<RequestInfo<T>>) -> Unit = {}
+    ) {
 
-        _dataState.value = DataState.START
+        _dataState.value = RequestInfo.start(null)
 
         modelScope.launch(Dispatchers.IO) {
 
-            val data = dbRequest.invoke()
+            val data: T? = dbRequest.invoke()
 
             withContext(Dispatchers.Main) {
-                _items.value = data
+                _dataState.value = RequestInfo.start(data)
             }
 
-            if (isDataEmpty) {
+            if (dataState.value?.isDataEmpty == true) {
+
+                if (remoteRequest == null || !shouldRemoteRequest.invoke()) {
+
+                    withContext(Dispatchers.Main) {
+
+                        _dataState.value = RequestInfo.loaded(_dataState.value?.data)
+                        onFinish.invoke(_dataState as MutableLiveData<RequestInfo<T>>)
+                    }
+                    return@launch
+                }
+
                 val response = remoteRequest.invoke()
 
                 if (response.isSuccessful) {
 
                     withContext(Dispatchers.Main) {
-                        _items.value = response.body()
 
-                        if (!isDataEmpty) {
+                        _dataState.value = RequestInfo.loaded(response.body())
+
+                        if (dataState.value?.isDataEmpty == false) {
 
                             withContext(Dispatchers.IO) {
-                                dbCacheSave.invoke(_items.value!!)
+                                dbCacheSave.invoke(dataState.value?.data as T)
                             }
 
-                            onFinish.invoke(_items)
-                            _dataState.value = DataState.LOADED
+                            _dataState.value = RequestInfo.loaded(response.body())
+                            onFinish.invoke(_dataState as MutableLiveData<RequestInfo<T>>)
                         }
-
                     }
+                } else {
+                    _dataState.value = response.errorBody()?.string()?.let { RequestInfo.error(message = it, response.body()) }
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    onFinish.invoke(_items)
-                    _dataState.value = DataState.LOADED
+
+                    //TODO: Reuse this previous state better
+                    _dataState.value = RequestInfo.loaded(_dataState.value?.data)
+
+                    onFinish.invoke(_dataState as MutableLiveData<RequestInfo<T>>)
                 }
             }
         }

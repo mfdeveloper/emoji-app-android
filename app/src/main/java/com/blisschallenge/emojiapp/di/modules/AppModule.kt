@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.blisschallenge.emojiapp.models.database.AppDatabase
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
-import com.blisschallenge.emojiapp.models.repositories.GithubRepository
+import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
+import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import com.blisschallenge.emojiapp.models.services.GitHubService
 import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
 import com.google.gson.Gson
@@ -55,7 +56,6 @@ object AppModule {
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
 
         if (AppDatabase.CLEAR_FIRST) {
-
             appContext.deleteDatabase(AppDatabase.DATABASE_NAME)
         }
 
@@ -73,6 +73,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(service: GitHubService, dao: GithubDao) = GithubRepository(service, dao)
+    fun provideRepository(service: GitHubService, dao: GithubDao) = EmojisRepository(service, dao)
+
+    @Singleton
+    @Provides
+    fun provideProfileRepository(service: GitHubService, dao: GithubDao) = ProfileRepository(service, dao)
 
 }
