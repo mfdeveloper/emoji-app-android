@@ -52,7 +52,7 @@ class ProfileRepository @Inject constructor(
 
         cacheOrRemoteRequest(
             modelScope,
-            dbRequest = { localDataSource.listProfileRepos(name = name!!) },
+            dbRequest = { localDataSource.listReposProfile(name = name!!) /*localDataSource.listProfileRepos(name = name!!)*/ },
             dbCacheSave = localDataSource::insertRepos,
             remoteRequest = { service.listRepositories(name = name!!) },
             onFinish = onFinish

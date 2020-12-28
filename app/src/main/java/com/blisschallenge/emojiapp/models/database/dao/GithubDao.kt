@@ -26,9 +26,18 @@ interface GithubDao {
     @Delete
     suspend fun deleteProfiles(vararg profiles: ProfileInfo): Int
 
-    @RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM git_repositories as repo INNER JOIN profiles ON repo.profileId = profiles.id WHERE login = :name")
-    suspend fun listProfileRepos(name: String): List<Repo>
+    /**
+     * Get all repositories that belongs to an profile.
+     * That uses the [name] param to avoid perform additional query to use the profile ID
+     *
+     * Using the @[ForeignKey] annotation, that query can performs
+     * a join between [ProfileInfo] and [Repo]
+     *
+     * @param[name] The [ProfileInfo] name to query repositories
+     * @return The [List] of [Repo] instances
+     */
+    @Query("SELECT * FROM git_repositories as repo WHERE full_name LIKE :name || '/%'")
+    suspend fun listReposProfile(name: String): List<Repo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRepos(repos: List<Repo>)
