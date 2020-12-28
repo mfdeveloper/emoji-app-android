@@ -2,13 +2,10 @@ package com.blisschallenge.emojiapp.models.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "profiles")
+@Entity(tableName = "profiles", primaryKeys = ["id", "login"])
 data class ProfileInfo(
-    @PrimaryKey(autoGenerate = true)
-    val uuid: Int? = null,
     @SerializedName("id")
     val id: String,
     @SerializedName("login")

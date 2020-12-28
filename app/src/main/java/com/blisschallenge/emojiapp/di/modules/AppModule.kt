@@ -4,12 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.blisschallenge.emojiapp.models.database.AppDatabase
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
+import com.blisschallenge.emojiapp.models.entities.Emoji
+import com.blisschallenge.emojiapp.models.entities.ProfileWithRepos
 import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
 import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import com.blisschallenge.emojiapp.models.services.GitHubService
 import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.GitRepoConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,13 +30,19 @@ object AppModule {
 
     private val baseUrl = "https://api.github.com"
 
+    /**
+     * See [How to use TypeToken + generics with Gson in Kotlin](https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin)
+     */
     @Provides
     @Singleton
     fun provideGson(): Gson {
 
-        //TODO: Create a new converter to return a List<ProfileWithRepos>
+        val profilesReposType = object : TypeToken<List<ProfileWithRepos>>() {}.type
+        val emojisType = object : TypeToken<List<Emoji>>() {}.type
+
         return GsonBuilder()
-            .registerTypeAdapter(List::class.java, EmojiConverterFactory())
+            .registerTypeAdapter(emojisType, EmojiConverterFactory())
+            .registerTypeAdapter(profilesReposType, GitRepoConverterFactory())
             .enableComplexMapKeySerialization()
             .setPrettyPrinting()
             .create()

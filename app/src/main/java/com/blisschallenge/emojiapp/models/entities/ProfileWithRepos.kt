@@ -5,7 +5,7 @@ import androidx.room.Relation
 
 data class ProfileWithRepos(
     @Embedded
-    val profile: ProfileInfo,
+    val profile: ProfileInfo?,
     @Relation(
         parentColumn = "id",
         entityColumn = "profileId"
