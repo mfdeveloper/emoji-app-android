@@ -1,9 +1,6 @@
 package com.blisschallenge.emojiapp.models.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.blisschallenge.emojiapp.models.entities.ProfileInfo
 
@@ -23,5 +20,8 @@ interface GithubDao {
     suspend fun findProfile(name: String? = ""): ProfileInfo
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProfile(emojis: ProfileInfo)
+    suspend fun insertProfile(profile: ProfileInfo)
+
+    @Delete
+    suspend fun deleteProfiles(vararg profiles: ProfileInfo): Int
 }

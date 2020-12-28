@@ -27,4 +27,8 @@ class AvatarsListViewModel @ViewModelInject constructor(
         profileRepository.avatars(viewModelScope, onFinish)
 
     }
+
+    fun remove(profile: ProfileInfo) {
+        profileRepository.removeProfile(viewModelScope, profile)
+    }
 }

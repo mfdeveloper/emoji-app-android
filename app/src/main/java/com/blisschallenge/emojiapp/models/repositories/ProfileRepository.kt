@@ -6,6 +6,9 @@ import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.entities.ProfileInfo
 import com.blisschallenge.emojiapp.models.services.GitHubService
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
@@ -31,5 +34,16 @@ class ProfileRepository @Inject constructor(
             dbRequest = localDataSource::listProfiles,
             onFinish = onFinish
         )
+    }
+
+    fun removeProfile(modelScope: CoroutineScope, profile: ProfileInfo, onFinish: (Int) -> Unit = {}) {
+
+        modelScope.launch(Dispatchers.IO) {
+
+            val result = localDataSource.deleteProfiles(profile)
+            withContext(Dispatchers.Main) {
+                onFinish(result)
+            }
+        }
     }
 }
