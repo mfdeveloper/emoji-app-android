@@ -1,9 +1,9 @@
 package com.blisschallenge.emojiapp.models.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
 @Entity(tableName = "profiles")
 data class ProfileInfo(
@@ -14,5 +14,6 @@ data class ProfileInfo(
     @SerializedName("login")
     val login: String,
     @SerializedName("avatar_url")
-    val avatar_url: String
+    @ColumnInfo(name = "avatar_url")
+    val avatarUrl: String
 )

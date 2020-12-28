@@ -15,17 +15,17 @@ class AvatarsListViewModel @ViewModelInject constructor(
         get() = this.profileRepository.dataState as MutableLiveData<RequestInfo<List<ProfileInfo>>?>
 
     val itemsUrls: LiveData<MutableList<ImageData>> = Transformations.map(dataState) {
-        it?.data?.map { profile -> ImageData(id = profile.login, url = profile.avatar_url) }?.toMutableList()
+        it?.data?.map { profile -> ImageData(id = profile.login, url = profile.avatarUrl) }?.toMutableList()
     }
 
     init {
+
         fetchData()
     }
 
     fun fetchData(onFinish: (MutableLiveData<RequestInfo<List<ProfileInfo>>>) -> Unit = {}) {
 
         profileRepository.avatars(viewModelScope, onFinish)
-
     }
 
     fun remove(profile: ProfileInfo) {

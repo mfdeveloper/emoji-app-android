@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.AsyncListDiffer.ListListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +11,12 @@ import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.ItemImageBinding
 import com.blisschallenge.emojiapp.models.entities.ImageData
 
-class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) {
+open class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) {
 
     lateinit var imageData: ImageData
     var onItemRemoved: (position: Int, changedList: List<ImageData>) -> Unit = { _: Int, _: List<ImageData> -> }
 
     private lateinit var viewHolder: ViewHolder
-    private val mListeners: MutableList<ListListener<ImageData>> = mutableListOf()
 
     inner class ViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -51,8 +49,8 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
 
     companion object : DiffUtil.ItemCallback<ImageData>() {
 
-        override fun areContentsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.url == newItem.url
         override fun areItemsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: ImageData, newItem: ImageData) = oldItem.equals(newItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -73,18 +71,6 @@ class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Companion) 
         imageData = getItem(position)
 
         holder.binding.executePendingBindings()
-    }
-
-    override fun onCurrentListChanged(previousList: MutableList<ImageData>, currentList: MutableList<ImageData>) {
-        super.onCurrentListChanged(previousList, currentList)
-
-        mListeners.onEach { listener ->
-            listener.onCurrentListChanged(previousList, currentList)
-        }
-    }
-
-    fun onChangeList(listener: ListListener<ImageData>) {
-        mListeners.add(listener)
     }
 
     // Clean all elements of the recycler

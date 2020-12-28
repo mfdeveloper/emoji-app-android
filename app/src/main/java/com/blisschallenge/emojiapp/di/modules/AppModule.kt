@@ -30,6 +30,7 @@ object AppModule {
     @Singleton
     fun provideGson(): Gson {
 
+        //TODO: Create a new converter to return a List<ProfileWithRepos>
         return GsonBuilder()
             .registerTypeAdapter(List::class.java, EmojiConverterFactory())
             .enableComplexMapKeySerialization()
