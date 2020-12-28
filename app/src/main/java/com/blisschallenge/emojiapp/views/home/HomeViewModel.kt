@@ -7,44 +7,44 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.blisschallenge.emojiapp.R
-import com.blisschallenge.emojiapp.helpers.DataState
+import com.blisschallenge.emojiapp.helpers.RequestInfo
 import com.blisschallenge.emojiapp.models.entities.Emoji
-import com.blisschallenge.emojiapp.models.repositories.GithubRepository
+import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
+import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import kotlin.random.Random
 
 class HomeViewModel @ViewModelInject constructor(
-    private val repository: GithubRepository
+    private val emojiRepository: EmojisRepository,
+    private val profileRepository: ProfileRepository
 ): ViewModel() {
 
     lateinit var navController: NavController
 
-    val items: LiveData<List<Emoji>>
-        get() = this.repository.items
-
     val emoji: LiveData<Emoji>
         get() = _emoji
 
-    val dataState: LiveData<DataState>
-        get() = repository.dataState
+    val dataState: LiveData<RequestInfo<List<Emoji>>?>
+        get() = this.emojiRepository.dataState as MutableLiveData<RequestInfo<List<Emoji>>?>
+
+    val profileName = MutableLiveData<String>()
 
     private val _emoji = MutableLiveData<Emoji>()
 
     fun fetchEmoji() {
 
-        if (repository.isDataEmpty) {
+        if (dataState.value?.isDataEmpty == true) {
 
-            repository.emojis(viewModelScope) {
+            emojiRepository.emojis(viewModelScope) {
                 _emoji.value = randomEmoji()
             }
         } else {
             _emoji.value = randomEmoji()
         }
-
     }
 
     fun randomEmoji(): Emoji? {
-        val index = Random.nextInt(0, items.value!!.size - 1)
-        return items.value?.get(index)
+        val index = Random.nextInt(0, dataState.value?.data!!.size - 1)
+        return dataState.value?.data?.get(index)
     }
 
     fun showList() {
@@ -54,9 +54,23 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
+    fun showAvatarsList() {
+
+        if (::navController.isInitialized) {
+            navController.navigate(R.id.action_home_fragment_to_avatars_list_fragment)
+        }
+    }
+
     fun drawEmoji() {
 
         fetchEmoji()
+    }
 
+    fun searchProfile() {
+
+        if (!profileName.value.isNullOrBlank()) {
+
+            profileRepository.profile(viewModelScope, name = profileName.value)
+        }
     }
 }

@@ -10,8 +10,10 @@
     <string name="button_emoji">Get emoji</string>
     <string name="button_emoji_list">Emoji List</string>
     <string name="content_image_emoji">Random emoji image</string>
+    <string name="input_profile_name">Profiler name</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_list_emojis">Emojis</string>
     <string name="menu_repos">Repositories</string>
+    <string name="menu_avatars">Avatars</string>
 </resources>

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_home_fragment_to_repos_list_fragment"
             app:destination="@id/repos_list_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_avatars_list_fragment"
+            app:destination="@id/avatars_list_fragment" />
     </fragment>
 
     <fragment
@@ -29,4 +32,9 @@
         android:name="com.blisschallenge.emojiapp.views.gitrepos.GitReposListFragment"
         android:label="@string/menu_repos"
         tools:layout="@layout/fragment_git_repos_list" />
+    <fragment
+        android:id="@+id/avatars_list_fragment"
+        android:name="com.blisschallenge.emojiapp.views.avatars.AvatarsListFragment"
+        android:label="@string/menu_avatars"
+        tools:layout="@layout/fragment_avatars_list" />
 </navigation>
