@@ -21,7 +21,7 @@ open class TextListAdapter : ListAdapter<TextData, TextListAdapter.ViewHolder>(C
     inner class ViewHolder(val binding: ItemTextBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         init {
-            binding.imageData.setOnClickListener(this)
+            binding.textData.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {

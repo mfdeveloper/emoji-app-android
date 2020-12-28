@@ -66,6 +66,7 @@ class GsonConvertersTest {
         val converter = GitRepoConverterFactory()
         val data = converter.deserialize(jsonElRepos, type, context)
 
-        assertThat(data.first().repos).containsAnyIn(repos)
+        assertThat(data).containsAnyIn(repos)
+//        assertThat(data.first().repos).containsAnyIn(repos)
     }
 }

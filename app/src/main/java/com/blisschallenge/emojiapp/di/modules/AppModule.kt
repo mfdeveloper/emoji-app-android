@@ -4,16 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.blisschallenge.emojiapp.models.database.AppDatabase
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
-import com.blisschallenge.emojiapp.models.entities.Emoji
-import com.blisschallenge.emojiapp.models.entities.ProfileWithRepos
 import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
 import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import com.blisschallenge.emojiapp.models.services.GitHubService
 import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
-import com.blisschallenge.emojiapp.models.services.converters.GitRepoConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,18 +27,28 @@ object AppModule {
     private val baseUrl = "https://api.github.com"
 
     /**
-     * See [How to use TypeToken + generics with Gson in Kotlin](https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin)
+     * Warning: I couldn't register a specific TypeTokens here, because
+     * the emojis requests returns a json: {"[emojiName]": "[emojiUrl]"}
+     *
+     * When tried to do this, got the Gson Expected BEGIN_ARRAY but was BEGIN_OBJECT
+     *
+     *
+     * See [CustomTypeAdapter gist](https://gist.github.com/cmelchior/1a97377df0c49cd4fca9)
+     *
+     * See also [Gson Expected BEGIN_ARRAY but was BEGIN_OBJECT](https://programmersought.com/article/36271114478/)
+     *
+     * See also [How to use TypeToken + generics with Gson in Kotlin](https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin)
+     *
+     * @see Gson.genericType
+     *
+     * TODO: Consider implement a custom TypeAdapter insteadof JsonDeserializer.
      */
     @Provides
     @Singleton
     fun provideGson(): Gson {
 
-        val profilesReposType = object : TypeToken<List<ProfileWithRepos>>() {}.type
-        val emojisType = object : TypeToken<List<Emoji>>() {}.type
-
         return GsonBuilder()
-            .registerTypeAdapter(emojisType, EmojiConverterFactory())
-            .registerTypeAdapter(profilesReposType, GitRepoConverterFactory())
+            .registerTypeAdapter(List::class.java, EmojiConverterFactory())
             .enableComplexMapKeySerialization()
             .setPrettyPrinting()
             .create()

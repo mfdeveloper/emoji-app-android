@@ -25,7 +25,7 @@ data class Repo(
     val privateAccess: Boolean = false,
     @Ignore
     val owner: ProfileInfo? = null
-) {
+) : ConvertableEntity {
     constructor(
             id: String,
             profileId: String?,

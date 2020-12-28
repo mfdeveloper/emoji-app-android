@@ -1,6 +1,5 @@
 package com.blisschallenge.emojiapp.models.services.converters
 
-import com.blisschallenge.emojiapp.models.entities.ProfileWithRepos
 import com.blisschallenge.emojiapp.models.entities.Repo
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -8,7 +7,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import java.lang.reflect.Type
 
-class GitRepoConverterFactory : JsonDeserializer<List<ProfileWithRepos>> {
+class GitRepoConverterFactory : JsonDeserializer<List<Repo>> {
 
     private val gson = GsonBuilder().setPrettyPrinting().create()
 
@@ -16,11 +15,10 @@ class GitRepoConverterFactory : JsonDeserializer<List<ProfileWithRepos>> {
             json: JsonElement?,
             typeOfT: Type?,
             context: JsonDeserializationContext?
-    ): List<ProfileWithRepos> {
+    ): List<Repo> {
 
         val jsonArr = json?.asJsonArray
         val repos = mutableListOf<Repo>()
-        var profilesAndRepos = mutableListOf<ProfileWithRepos>()
 
         jsonArr.let {
             it?.onEach { jsonElement ->
@@ -30,15 +28,9 @@ class GitRepoConverterFactory : JsonDeserializer<List<ProfileWithRepos>> {
                 gitRepo.profileId = gitRepo.owner?.id
 
                 repos.add(gitRepo)
-                profilesAndRepos.add(
-                    ProfileWithRepos(
-                        profile = gitRepo.owner,
-                        repos = repos
-                    )
-                )
             }
 
-            return profilesAndRepos
+            return repos
         }
     }
 }

@@ -17,13 +17,15 @@ class GitReposListFragment : Fragment() {
 
     private val viewModel: GitReposViewModel by viewModels()
     private lateinit var binding: FragmentGitReposListBinding
-    private var textAdapter = TextListAdapter()
+    private lateinit var textAdapter: TextListAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
+        textAdapter = TextListAdapter()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_git_repos_list, container, false)
 
