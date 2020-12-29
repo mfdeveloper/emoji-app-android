@@ -3,6 +3,7 @@ package com.blisschallenge.emojiapp.models.database.dao
 import androidx.room.*
 import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.blisschallenge.emojiapp.models.entities.ProfileInfo
+import com.blisschallenge.emojiapp.models.entities.Repo
 
 @Dao
 interface GithubDao {
@@ -24,4 +25,11 @@ interface GithubDao {
 
     @Delete
     suspend fun deleteProfiles(vararg profiles: ProfileInfo): Int
+
+    @RewriteQueriesToDropUnusedColumns
+    @Query("SELECT * FROM git_repositories as repo INNER JOIN profiles ON repo.profileId = profiles.id WHERE login = :name")
+    suspend fun listProfileRepos(name: String): List<Repo>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRepos(repos: List<Repo>)
 }

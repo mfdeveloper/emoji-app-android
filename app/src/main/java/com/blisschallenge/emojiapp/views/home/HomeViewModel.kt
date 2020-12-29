@@ -61,6 +61,14 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
+    fun showReposList() {
+
+        if (::navController.isInitialized) {
+            val action = HomeFragmentDirections.actionHomeFragmentToReposListFragment(profileName.value)
+            navController.navigate(action)
+        }
+    }
+
     fun drawEmoji() {
 
         fetchEmoji()

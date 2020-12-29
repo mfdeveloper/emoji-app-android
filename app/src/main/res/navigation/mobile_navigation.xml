@@ -31,7 +31,12 @@
         android:id="@+id/repos_list_fragment"
         android:name="com.blisschallenge.emojiapp.views.gitrepos.GitReposListFragment"
         android:label="@string/menu_repos"
-        tools:layout="@layout/fragment_git_repos_list" />
+        tools:layout="@layout/fragment_git_repos_list" >
+        <argument
+            android:name="profileName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/avatars_list_fragment"
         android:name="com.blisschallenge.emojiapp.views.avatars.AvatarsListFragment"

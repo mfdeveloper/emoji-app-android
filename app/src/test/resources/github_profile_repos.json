@@ -1,0 +1,36 @@
+[
+  {
+    "id": 98662294,
+    "node_id": "MDEwOlJlcG9zaXRvcnk5ODY2MjI5NA==",
+    "name": "android-fat-aar",
+    "full_name": "mfdeveloper/android-fat-aar",
+    "private": false,
+    "owner": {
+      "login": "mfdeveloper",
+      "id": 431606,
+      "node_id": "MDQ6VXNlcjQzMTYwNg==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/431606?v=4",
+      "url": "https://api.github.com/users/mfdeveloper",
+      "html_url": "https://github.com/mfdeveloper"
+    },
+    "html_url": "https://github.com/mfdeveloper/android-fat-aar",
+    "description": "Gradle script that allows you to merge and embed dependencies in generted aar file"
+  },
+  {
+    "id": 322210274,
+    "node_id": "MDEwOlJlcG9zaXRvcnkzMjIyMTAyNzQ=",
+    "name": "android-kotlin-fundamentals-starter-apps",
+    "full_name": "mfdeveloper/android-kotlin-fundamentals-starter-apps",
+    "private": false,
+    "owner": {
+      "login": "mfdeveloper",
+      "id": 431606,
+      "node_id": "MDQ6VXNlcjQzMTYwNg==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/431606?v=4",
+      "url": "https://api.github.com/users/mfdeveloper",
+      "html_url": "https://github.com/mfdeveloper"
+    },
+    "html_url": "https://github.com/mfdeveloper/android-kotlin-fundamentals-starter-apps",
+    "description": "android-kotlin-fundamentals-starter-apps"
+  }
+]

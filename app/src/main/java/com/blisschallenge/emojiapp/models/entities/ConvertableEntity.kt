@@ -1,0 +1,3 @@
+package com.blisschallenge.emojiapp.models.entities
+
+interface ConvertableEntity

@@ -66,13 +66,20 @@ abstract class BaseRepository {
                         }
                     }
                 } else {
-                    _dataState.value = response.errorBody()?.string()?.let { RequestInfo.error(message = it, response.body()) }
+
+                    withContext(Dispatchers.Main) {
+
+                        _dataState.value = response.errorBody()?.string()?.let { RequestInfo.error(message = it, response.body()) }
+                    }
                 }
             } else {
                 withContext(Dispatchers.Main) {
 
                     //TODO: Reuse this previous state better
-                    _dataState.value = RequestInfo.loaded(_dataState.value?.data)
+                    if (dataState.value?.state != RequestInfo.DataState.LOADED) {
+
+                        _dataState.value = RequestInfo.loaded(_dataState.value?.data)
+                    }
 
                     onFinish.invoke(_dataState as MutableLiveData<RequestInfo<T>>)
                 }

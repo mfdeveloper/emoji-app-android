@@ -7,7 +7,6 @@ import com.google.gson.JsonElement
 import java.lang.reflect.Type
 
 class EmojiConverterFactory : JsonDeserializer<List<Emoji>> {
-
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
@@ -20,4 +19,5 @@ class EmojiConverterFactory : JsonDeserializer<List<Emoji>> {
             Emoji(name = it.key, url = it.value.asString)
         }
     }
+
 }

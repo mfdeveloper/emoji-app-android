@@ -12,6 +12,6 @@ data class Emoji(
     var url: String = "",
     @SerializedName("name")
     val name: String
-) {
+) : ConvertableEntity {
     override fun equals(other: Any?): Boolean = name == (other as? Emoji)?.name
 }

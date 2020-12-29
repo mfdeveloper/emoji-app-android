@@ -6,7 +6,7 @@
     <data>
         <variable
             name="adapter"
-            type="com.blisschallenge.emojiapp.views.adapters.ImageAdapter" />
+            type="com.blisschallenge.emojiapp.views.adapters.TextListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,17 +14,20 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground">
 
-        <ImageView
-            android:id="@+id/image_data"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/horizontal_margin"
+        <TextView
+            android:id="@+id/text_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
+            android:layout_marginTop="@dimen/horizontal_margin"
             android:layout_marginBottom="@dimen/horizontal_margin"
-            app:imageUrl="@{adapter.imageData.url}"
+            android:text="@{adapter.textData.value}"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:text="A value text here"
+            tools:textSize="16sp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

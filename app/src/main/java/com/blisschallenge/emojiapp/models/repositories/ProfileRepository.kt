@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.blisschallenge.emojiapp.helpers.RequestInfo
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.entities.ProfileInfo
+import com.blisschallenge.emojiapp.models.entities.Repo
 import com.blisschallenge.emojiapp.models.services.GitHubService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,15 +28,6 @@ class ProfileRepository @Inject constructor(
         )
     }
 
-    fun avatars(modelScope: CoroutineScope, onFinish: (MutableLiveData<RequestInfo<List<ProfileInfo>>>) -> Unit = {}) {
-
-        cacheOrRemoteRequest(
-            modelScope,
-            dbRequest = localDataSource::listProfiles,
-            onFinish = onFinish
-        )
-    }
-
     fun removeProfile(modelScope: CoroutineScope, profile: ProfileInfo, onFinish: (Int) -> Unit = {}) {
 
         modelScope.launch(Dispatchers.IO) {
@@ -45,5 +37,25 @@ class ProfileRepository @Inject constructor(
                 onFinish(result)
             }
         }
+    }
+
+    fun avatars(modelScope: CoroutineScope, onFinish: (MutableLiveData<RequestInfo<List<ProfileInfo>>>) -> Unit = {}) {
+
+        cacheOrRemoteRequest(
+            modelScope,
+            dbRequest = localDataSource::listProfiles,
+            onFinish = onFinish
+        )
+    }
+
+    fun gitRepositories(modelScope: CoroutineScope, name: String?, onFinish: (MutableLiveData<RequestInfo<List<Repo>>>) -> Unit = {}) {
+
+        cacheOrRemoteRequest(
+            modelScope,
+            dbRequest = { localDataSource.listProfileRepos(name = name!!) },
+            dbCacheSave = localDataSource::insertRepos,
+            remoteRequest = { service.listRepositories(name = name!!) },
+            onFinish = onFinish
+        )
     }
 }

@@ -1,7 +1,6 @@
 package com.blisschallenge.emojiapp.views.avatars
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentAvatarsListBinding
 import com.blisschallenge.emojiapp.models.entities.ProfileInfo
-import com.blisschallenge.emojiapp.views.emojis.ImageAdapter
+import com.blisschallenge.emojiapp.views.adapters.ImageAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

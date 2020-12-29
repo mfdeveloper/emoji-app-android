@@ -7,7 +7,7 @@ import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
 import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import com.blisschallenge.emojiapp.models.services.GitHubService
-import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.ListConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,12 +26,27 @@ object AppModule {
 
     private val baseUrl = "https://api.github.com"
 
+    /**
+     * Warning: I couldn't register a specific TypeTokens here, because
+     * the emojis requests returns a json: {"[emojiName]": "[emojiUrl]"}
+     *
+     * When tried to do this, got the Gson Expected BEGIN_ARRAY but was BEGIN_OBJECT
+     *
+     *
+     * See [CustomTypeAdapter gist](https://gist.github.com/cmelchior/1a97377df0c49cd4fca9)
+     *
+     * See also [Gson Expected BEGIN_ARRAY but was BEGIN_OBJECT](https://programmersought.com/article/36271114478/)
+     *
+     * See also [How to use TypeToken + generics with Gson in Kotlin](https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin)
+     *
+     * TODO: Consider implement a custom TypeAdapter insteadof JsonDeserializer.
+     */
     @Provides
     @Singleton
     fun provideGson(): Gson {
 
         return GsonBuilder()
-            .registerTypeAdapter(List::class.java, EmojiConverterFactory())
+            .registerTypeAdapter(List::class.java, ListConverterFactory())
             .enableComplexMapKeySerialization()
             .setPrettyPrinting()
             .create()
@@ -78,5 +93,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideProfileRepository(service: GitHubService, dao: GithubDao) = ProfileRepository(service, dao)
-
 }
