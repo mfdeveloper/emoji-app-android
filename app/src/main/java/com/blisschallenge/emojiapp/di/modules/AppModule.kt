@@ -7,7 +7,7 @@ import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
 import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
 import com.blisschallenge.emojiapp.models.services.GitHubService
-import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.ListConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -39,8 +39,6 @@ object AppModule {
      *
      * See also [How to use TypeToken + generics with Gson in Kotlin](https://stackoverflow.com/questions/33381384/how-to-use-typetoken-generics-with-gson-in-kotlin)
      *
-     * @see Gson.genericType
-     *
      * TODO: Consider implement a custom TypeAdapter insteadof JsonDeserializer.
      */
     @Provides
@@ -48,7 +46,7 @@ object AppModule {
     fun provideGson(): Gson {
 
         return GsonBuilder()
-            .registerTypeAdapter(List::class.java, EmojiConverterFactory())
+            .registerTypeAdapter(List::class.java, ListConverterFactory())
             .enableComplexMapKeySerialization()
             .setPrettyPrinting()
             .create()
@@ -95,5 +93,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideProfileRepository(service: GitHubService, dao: GithubDao) = ProfileRepository(service, dao)
-
 }

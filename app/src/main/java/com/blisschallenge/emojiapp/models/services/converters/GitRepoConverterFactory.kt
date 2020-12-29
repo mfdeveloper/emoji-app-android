@@ -20,8 +20,8 @@ class GitRepoConverterFactory : JsonDeserializer<List<Repo>> {
         val jsonArr = json?.asJsonArray
         val repos = mutableListOf<Repo>()
 
-        jsonArr.let {
-            it?.onEach { jsonElement ->
+        jsonArr?.let {
+            it.onEach { jsonElement ->
                 val jsonRepo = jsonElement?.asJsonObject
 
                 val gitRepo = gson.fromJson(jsonRepo, Repo::class.java)
@@ -29,8 +29,7 @@ class GitRepoConverterFactory : JsonDeserializer<List<Repo>> {
 
                 repos.add(gitRepo)
             }
-
-            return repos
         }
+        return repos
     }
 }

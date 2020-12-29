@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentEmojisListBinding
+import com.blisschallenge.emojiapp.views.adapters.ImageAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

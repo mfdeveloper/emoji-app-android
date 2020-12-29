@@ -1,4 +1,4 @@
-package com.blisschallenge.emojiapp.views.emojis
+package com.blisschallenge.emojiapp.views.adapters
 
 import android.view.LayoutInflater
 import android.view.View

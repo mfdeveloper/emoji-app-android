@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.FragmentGitReposListBinding
 import com.blisschallenge.emojiapp.views.adapters.TextListAdapter
@@ -16,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class GitReposListFragment : Fragment() {
 
     private val viewModel: GitReposViewModel by viewModels()
+    private val args: GitReposListFragmentArgs by navArgs()
     private lateinit var binding: FragmentGitReposListBinding
     private lateinit var textAdapter: TextListAdapter
 
@@ -38,7 +40,17 @@ class GitReposListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.profileName.value = args.profileName
+    }
+
     private fun setupListeners() {
+
+        viewModel.profileName.observe(viewLifecycleOwner) { name ->
+            viewModel.fetchData(profileName = name)
+        }
 
         viewModel.itemsValues.observe(viewLifecycleOwner) { textData ->
             textAdapter.submitList(textData)

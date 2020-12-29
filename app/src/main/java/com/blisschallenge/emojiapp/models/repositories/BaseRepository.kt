@@ -66,7 +66,11 @@ abstract class BaseRepository {
                         }
                     }
                 } else {
-                    _dataState.value = response.errorBody()?.string()?.let { RequestInfo.error(message = it, response.body()) }
+
+                    withContext(Dispatchers.Main) {
+
+                        _dataState.value = response.errorBody()?.string()?.let { RequestInfo.error(message = it, response.body()) }
+                    }
                 }
             } else {
                 withContext(Dispatchers.Main) {

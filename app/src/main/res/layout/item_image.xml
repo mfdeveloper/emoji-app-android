@@ -6,7 +6,7 @@
     <data>
         <variable
             name="adapter"
-            type="com.blisschallenge.emojiapp.views.emojis.ImageAdapter" />
+            type="com.blisschallenge.emojiapp.views.adapters.ImageAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

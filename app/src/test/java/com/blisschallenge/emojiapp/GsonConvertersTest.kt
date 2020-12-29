@@ -2,7 +2,7 @@ package com.blisschallenge.emojiapp
 
 import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.blisschallenge.emojiapp.models.entities.Repo
-import com.blisschallenge.emojiapp.models.services.converters.EmojiConverterFactory
+import com.blisschallenge.emojiapp.models.services.converters.ListConverterFactory
 import com.blisschallenge.emojiapp.models.services.converters.GitRepoConverterFactory
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.GsonBuilder
@@ -47,7 +47,7 @@ class GsonConvertersTest {
     @Test
     fun convertJsonElementToEmojisList() {
 
-        val converter = EmojiConverterFactory()
+        val converter = ListConverterFactory()
         val data = converter.deserialize(jsonData, type, context)
 
         assertThat(data).contains(Emoji(name = "1st_place_medal"))

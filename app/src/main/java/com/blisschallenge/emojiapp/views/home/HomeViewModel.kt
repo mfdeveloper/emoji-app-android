@@ -64,7 +64,8 @@ class HomeViewModel @ViewModelInject constructor(
     fun showReposList() {
 
         if (::navController.isInitialized) {
-            navController.navigate(R.id.action_home_fragment_to_repos_list_fragment)
+            val action = HomeFragmentDirections.actionHomeFragmentToReposListFragment(profileName.value)
+            navController.navigate(action)
         }
     }
 

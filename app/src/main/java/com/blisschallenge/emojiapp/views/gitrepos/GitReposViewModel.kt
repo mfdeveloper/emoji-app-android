@@ -18,13 +18,10 @@ class GitReposViewModel @ViewModelInject constructor(
         it?.data?.map { repo -> TextData(id = repo.name, value = repo.fullName) }?.toMutableList()
     }
 
-    init {
+    val profileName = MutableLiveData<String>()
 
-        fetchData()
-    }
+    fun fetchData(profileName: String?, onFinish: (MutableLiveData<RequestInfo<List<Repo>>>) -> Unit = {}) {
 
-    fun fetchData(onFinish: (MutableLiveData<RequestInfo<List<Repo>>>) -> Unit = {}) {
-
-        profileRepository.gitRepositories(viewModelScope, "mfdeveloper", onFinish)
+        profileRepository.gitRepositories(viewModelScope, name = profileName, onFinish)
     }
 }
