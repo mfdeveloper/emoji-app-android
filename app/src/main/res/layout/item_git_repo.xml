@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="adapter"
+            type="com.blisschallenge.emojiapp.views.adapters.ReposPagingAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/item_margin_horizontal"
+        android:paddingTop="@dimen/item_padding_vertical"
+        tools:ignore="UnusedAttribute">
+
+        <TextView
+            android:id="@+id/repo_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:text="@{adapter.repo.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Repository title"/>
+
+        <TextView
+            android:id="@+id/repo_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="10"
+            android:paddingVertical="@dimen/item_padding_vertical"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/description_size"
+            android:textStyle="italic"
+            android:text='@{adapter.repo.description ?? ""}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repo_name"
+            tools:ignore="UnusedAttribute"
+            tools:text="Repository base description"/>
+
+        <TextView
+            android:id="@+id/repo_language"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:paddingVertical="@dimen/item_padding_vertical"
+            android:text='@{@string/label_repo_language(adapter.repo.language ?? "Unknown")}'
+            android:textSize="@dimen/description_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repo_description"
+            tools:ignore="RtlCompat"
+            tools:text="Language: Unknown"/>
+
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="0dp"
+            android:layout_marginVertical="@dimen/item_margin_vertical"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            app:layout_constraintEnd_toStartOf="@+id/repo_stars"
+            app:layout_constraintBottom_toBottomOf="@+id/repo_stars"
+            app:layout_constraintTop_toTopOf="@+id/repo_stars"
+            />
+
+        <TextView
+            android:id="@+id/repo_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/item_padding_vertical"
+            android:textSize="@dimen/description_size"
+            android:textStyle="bold"
+            android:text="@{adapter.repo.stars}"
+            app:layout_constraintEnd_toStartOf="@id/forks"
+            app:layout_constraintBaseline_toBaselineOf="@+id/repo_forks"
+            tools:text="30"/>
+
+        <ImageView
+            android:id="@+id/forks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/item_margin_vertical"
+            android:src="@drawable/ic_git_branch"
+            app:layout_constraintEnd_toStartOf="@+id/repo_forks"
+            app:layout_constraintBottom_toBottomOf="@+id/repo_forks"
+            app:layout_constraintTop_toTopOf="@+id/repo_forks"
+            />
+
+        <TextView
+            android:id="@+id/repo_forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/item_padding_vertical"
+            android:textSize="@dimen/description_size"
+            android:text="@{adapter.repo.forks}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repo_description"
+            tools:text="30"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

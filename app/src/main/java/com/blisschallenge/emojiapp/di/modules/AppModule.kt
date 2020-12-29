@@ -6,8 +6,8 @@ import com.blisschallenge.emojiapp.models.database.AppDatabase
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.repositories.EmojisRepository
 import com.blisschallenge.emojiapp.models.repositories.ProfileRepository
-import com.blisschallenge.emojiapp.models.services.GitHubService
-import com.blisschallenge.emojiapp.models.services.converters.ListConverterFactory
+import com.blisschallenge.emojiapp.models.api.GitHubService
+import com.blisschallenge.emojiapp.models.api.converters.ListConverterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -15,6 +15,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -53,18 +55,28 @@ object AppModule {
     }
 
     @Provides
+    fun provideHttpClient(): OkHttpClient {
+        val logger = HttpLoggingInterceptor()
+        logger.level = HttpLoggingInterceptor.Level.BASIC
+
+        return OkHttpClient.Builder()
+                .addInterceptor(logger)
+                .build()
+    }
+
+    @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson): Retrofit {
+    fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit {
 
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(baseUrl)
+            .client(client)
             .build()
     }
 
     @Provides
     fun provideGitHubService (retrofit: Retrofit): GitHubService = retrofit.create(GitHubService::class.java)
-
 
     @Provides
     @Singleton
@@ -92,5 +104,5 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideProfileRepository(service: GitHubService, dao: GithubDao) = ProfileRepository(service, dao)
+    fun provideProfileRepository(db: AppDatabase, service: GitHubService, dao: GithubDao) = ProfileRepository(db, service, dao)
 }

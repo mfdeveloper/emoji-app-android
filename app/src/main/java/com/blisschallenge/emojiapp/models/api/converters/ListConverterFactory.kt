@@ -1,7 +1,6 @@
-package com.blisschallenge.emojiapp.models.services.converters
+package com.blisschallenge.emojiapp.models.api.converters
 
 import com.blisschallenge.emojiapp.models.entities.ConvertableEntity
-import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

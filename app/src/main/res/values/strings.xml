@@ -7,10 +7,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Fragments/Screens labels, button names... -->
     <string name="button_emoji">Get emoji</string>
     <string name="button_emoji_list">Emoji List</string>
     <string name="content_image_emoji">Random emoji image</string>
     <string name="input_profile_name">Profiler name</string>
+    <string name="label_repo_language">Language: %s</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_list_emojis">Emojis</string>

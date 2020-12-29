@@ -30,19 +30,23 @@ open class ImageAdapter : ListAdapter<ImageData, ImageAdapter.ViewHolder>(Compan
 
         private fun remove() {
 
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            /**
+             * Since RecyclerView 1.2.0-alpha or beta, the [getAdapterPosition]
+             * is deprecated. Using [getBindingAdapterPosition] instead now
+             */
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 var listChange = currentList.toMutableList()
 
                 if (currentList.size == 1) {
-                    notifyItemRemoved(adapterPosition)
+                    notifyItemRemoved(bindingAdapterPosition)
                     listChange = mutableListOf()
                 }else {
-                    listChange.removeAt(adapterPosition)
+                    listChange.removeAt(bindingAdapterPosition)
                 }
 
                 submitList(listChange)
 
-                onItemRemoved(adapterPosition, listChange)
+                onItemRemoved(bindingAdapterPosition, listChange)
             }
         }
     }

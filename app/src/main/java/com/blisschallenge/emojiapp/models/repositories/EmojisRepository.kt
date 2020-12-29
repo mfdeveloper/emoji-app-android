@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.blisschallenge.emojiapp.helpers.RequestInfo
 import com.blisschallenge.emojiapp.models.database.dao.GithubDao
 import com.blisschallenge.emojiapp.models.entities.Emoji
-import com.blisschallenge.emojiapp.models.services.GitHubService
+import com.blisschallenge.emojiapp.models.api.GitHubService
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

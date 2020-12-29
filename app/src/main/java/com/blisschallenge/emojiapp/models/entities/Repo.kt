@@ -30,6 +30,14 @@ data class Repo(
     @SerializedName("full_name")
     @ColumnInfo(name = "full_name")
     var fullName: String,
+    @SerializedName("description")
+    var description: String?,
+    @SerializedName("language")
+    var language: String?,
+    @SerializedName("stargazers_count")
+    var stars: String,
+    @SerializedName("forks_count")
+    var forks: String,
     @SerializedName("private")
     @ColumnInfo(name = "private_access")
     val privateAccess: Boolean = false,
@@ -41,12 +49,20 @@ data class Repo(
             profileId: String?,
             name: String,
             fullName: String,
+            description: String?,
+            language: String?,
+            stars: String,
+            forks: String,
             privateAccess: Boolean
     ) : this(
             id,
             profileId,
             name,
             fullName,
+            description,
+            language,
+            stars,
+            forks,
             privateAccess,
             null
     )

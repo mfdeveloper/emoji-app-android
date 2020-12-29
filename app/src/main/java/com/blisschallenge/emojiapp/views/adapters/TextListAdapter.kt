@@ -11,6 +11,14 @@ import com.blisschallenge.emojiapp.R
 import com.blisschallenge.emojiapp.databinding.ItemTextBinding
 import com.blisschallenge.emojiapp.models.entities.TextData
 
+@Deprecated(
+    message = """
+        Is not necessary anymore. Was replaced by 'ReposPagingAdapter' to show a git repos list.
+        This class is still here to be a base example to use in others projects, as a base adapter to simple "one-texts" lists
+    """,
+    replaceWith = ReplaceWith("ReposPagingAdapter", imports = ["com.blisschallenge.emojiapp.views.adapters.ReposPagingAdapter"]),
+    level = DeprecationLevel.WARNING
+)
 open class TextListAdapter : ListAdapter<TextData, TextListAdapter.ViewHolder>(Companion) {
 
     lateinit var textData: TextData
@@ -30,19 +38,23 @@ open class TextListAdapter : ListAdapter<TextData, TextListAdapter.ViewHolder>(C
 
         private fun remove() {
 
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            /**
+             * Since RecyclerView 1.2.0-alpha or beta, the [getAdapterPosition]
+             * is deprecated. Using [getBindingAdapterPosition] instead now
+             */
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 var listChange = currentList.toMutableList()
 
                 if (currentList.size == 1) {
-                    notifyItemRemoved(adapterPosition)
+                    notifyItemRemoved(bindingAdapterPosition)
                     listChange = mutableListOf()
                 }else {
-                    listChange.removeAt(adapterPosition)
+                    listChange.removeAt(bindingAdapterPosition)
                 }
 
                 submitList(listChange)
 
-                onItemRemoved(adapterPosition, listChange)
+                onItemRemoved(bindingAdapterPosition, listChange)
             }
         }
     }
@@ -73,7 +85,6 @@ open class TextListAdapter : ListAdapter<TextData, TextListAdapter.ViewHolder>(C
         holder.binding.executePendingBindings()
     }
 
-    // Clean all elements of the recycler
     fun clear() {
 
         submitList(listOf())

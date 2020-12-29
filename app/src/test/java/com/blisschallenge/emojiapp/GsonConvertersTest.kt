@@ -2,8 +2,8 @@ package com.blisschallenge.emojiapp
 
 import com.blisschallenge.emojiapp.models.entities.Emoji
 import com.blisschallenge.emojiapp.models.entities.Repo
-import com.blisschallenge.emojiapp.models.services.converters.ListConverterFactory
-import com.blisschallenge.emojiapp.models.services.converters.GitRepoConverterFactory
+import com.blisschallenge.emojiapp.models.api.converters.ListConverterFactory
+import com.blisschallenge.emojiapp.models.api.converters.GitRepoConverterFactory
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -67,6 +67,5 @@ class GsonConvertersTest {
         val data = converter.deserialize(jsonElRepos, type, context)
 
         assertThat(data).containsAnyIn(repos)
-//        assertThat(data.first().repos).containsAnyIn(repos)
     }
 }
